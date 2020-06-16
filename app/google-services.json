@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1081445848015",
+    "firebase_url": "https://calcula-flex-19mob-8542c.firebaseio.com",
+    "project_id": "calcula-flex-19mob-8542c",
+    "storage_bucket": "calcula-flex-19mob-8542c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081445848015:android:410f95a1ab5371853b78ba",
+        "android_client_info": {
+          "package_name": "br.com.phs.calculaflex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081445848015-ef36kp7kn52flb58ofnmtsbbshkcbkou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiPW1TkfjJnBJLkXIkyV2ypHYuZqydFNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081445848015-ef36kp7kn52flb58ofnmtsbbshkcbkou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
