@@ -27,9 +27,23 @@ class LoginFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupEvents()
         startAnimation()
         setupObserver()
         setupListeners()
+    }
+
+    private fun setupEvents() {
+
+        tvResetPassword.setOnClickListener {
+            loginViewModel.resetPassword(etUserNameSignUp.text.toString())
+        }
+
+        tvNewAccount.setOnClickListener {
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
+
     }
 
     private fun startAnimation() {
@@ -48,6 +62,19 @@ class LoginFragment : BaseFragment() {
                 is RequestState.Loading -> showLoading("Realizando a autenticação")
             }
         })
+
+        this.loginViewModel.resetPasswordState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is RequestState.Success -> {
+                    hideLoading()
+                    showMessage(it.data)
+                }
+                is RequestState.Error -> showError(it.throwable)
+                is RequestState.Loading -> showLoading("Reenviando o e-mail para alteração")
+            }
+        })
+
+
     }
 
     private fun setupListeners() {
