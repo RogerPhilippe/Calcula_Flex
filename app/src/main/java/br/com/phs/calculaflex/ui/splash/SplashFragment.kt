@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import br.com.phs.calculaflex.R
+import br.com.phs.calculaflex.utils.firebase.RemoteConfigUtils
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class SplashFragment : Fragment() {
@@ -23,14 +24,28 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        updateRemoteConfig()
+
+    }
+
+    private fun updateRemoteConfig() {
         Handler().postDelayed({
-            val extras = FragmentNavigatorExtras(
-                ivLogoApp to "logoApp",
-                tvAppName to "textApp"
+            RemoteConfigUtils.fetchAndActivate()
+                .addOnCompleteListener {
+                    nextScreen()
+                }
+        }, 2000) }
+
+    private fun nextScreen() {
+        val extras = FragmentNavigatorExtras(
+            ivLogoApp to "logoApp",
+            tvAppName to "textApp"   )
+        NavHostFragment.findNavController(this)
+            .navigate(
+                R.id.action_splashFragment_to_login_nav_graph,
+                null, null, extras
             )
-            NavHostFragment.findNavController(this).navigate(
-                R.id.action_splashFragment_to_login_nav_graph, null, null, extras)
-        }, 2000)
     }
 
 }

@@ -11,9 +11,11 @@ import br.com.phs.calculaflex.R
 import br.com.phs.calculaflex.ui.base.BaseFragment
 
 class TermsFragment : BaseFragment() {
+
     override val layout = R.layout.fragment_terms
     private lateinit var wvTerms: WebView
     private lateinit var ivBack: ImageView
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         wvTerms = view.findViewById(R.id.wvTerms)
@@ -21,6 +23,6 @@ class TermsFragment : BaseFragment() {
         ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
-        wvTerms.loadUrl("https://calcula-flex-19mob-8542c.web.app")
+        wvTerms.loadUrl("http://mob19.philippesis.com.br")
     }
 }

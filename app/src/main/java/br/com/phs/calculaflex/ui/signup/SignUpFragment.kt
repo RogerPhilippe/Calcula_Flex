@@ -7,7 +7,12 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import br.com.concrete.canarinho.watcher.TelefoneTextWatcher
+import br.com.concrete.canarinho.watcher.evento.EventoDeValidacao
 import br.com.phs.calculaflex.R
+import br.com.phs.calculaflex.extensions.hideKeyboard
+import br.com.phs.calculaflex.models.NewUser
 import br.com.phs.calculaflex.models.RequestState
 import br.com.phs.calculaflex.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_sign_up.*
@@ -25,18 +30,42 @@ class SignUpFragment : BaseFragment() {
 
         tvTerms = view.findViewById(R.id.tvTerms)
         tvTerms.setOnClickListener {
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_signUpFragment_to_termsFragment)
+            findNavController().navigate(R.id.action_signUpFragment_to_termsFragment)
+        }
+
+        registerObserver()
+        setUpListener()
+    }
+
+    private fun setUpListener() {
+
+        etPhoneSignUp.addTextChangedListener(TelefoneTextWatcher(object : EventoDeValidacao {
+            override fun totalmenteValido(valorAtual: String?) { }
+            override fun invalido(valorAtual: String?, mensagem: String?) { }
+            override fun parcialmenteValido(valorAtual: String?) { }
+        }))
+
+        tvTerms.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_termsFragment)
         }
 
         btCreateAccount.setOnClickListener {
+            hideKeyboard()
+            if (!checkBoxDone) {
+                Toast.makeText(context, "Leia e aceite os termos de uso", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-            signUpViewModel.signUp(etEmailSignUp.text.toString(), etPasswordSignUp.text.toString())
-
+            signUpViewModel.signUp(
+                NewUser(
+                    etUserNameSignUp.text.toString(),
+                    etEmailSignUp.text.toString(),
+                    etPhoneSignUp.text.toString(),
+                    etPasswordSignUp.text.toString())
+            )
         }
 
         setUpCheckboxListener()
-        registerObserver()
 
     }
 
